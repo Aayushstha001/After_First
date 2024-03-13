@@ -4,9 +4,16 @@
 <h1>Register Employee</h1>
 <form action="{% url 'register_employee' %}" method="POST">
     {% csrf_token %}
-    {% for field in form %}
-        <label>{{field.label}}:</label> {{field}}<br>
-    {% endfor %}
+    <label>Company:</label>
+    <select name="company">
+        {% for company in company %}
+        <option value="{{company}}">{{company}}</option>
+        {% endfor %}
+    </select><br>
+    <label>Branch Code:</label>{{form.branch_code}}<br>
+    <label>Employee Code:</label>{{form.employee_code}}<br>
+    <label>Phone Number:</label>{{form.phone_no}}<br>
+    <label>Image:</label>{{form.image}}<br><br>
     <a href="{% url 'home' %}">Cancel</a>
     <button type="submit">Register Employee</button>
 </form>

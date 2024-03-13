@@ -43,6 +43,7 @@ def logout_user(request):
 @login_required(login_url='login')
 def register_employee(request):
     form = EmployeeForm()
+    company = Company.objects.all()
 
     if request.method == "POST":
         form = EmployeeForm(request.POST)
@@ -61,5 +62,5 @@ def register_employee(request):
         else:
             messages.error(request, 'Error')
         
-    context = {'form': form}
+    context = {'form': form, 'company':company}
     return render(request, 'main/employee_register.html', context)
