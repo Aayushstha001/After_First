@@ -7,10 +7,16 @@
     <label>Company:</label>
     <select name="company">
         {% for company in company %}
-        <option value="{{company}}">{{company}}</option>
+        <option value="{{company.company_name}}">{{company}}</option>
         {% endfor %}
     </select><br>
     <label>Branch Code:</label>{{form.branch_code}}<br>
+    <label>Branch:</label>
+    <select name="branch">
+        {% for branch in branch %}
+        <option value="{{branch}}">{{branch}}</option>
+        {% endfor %}
+    </select><br>
     <label>Employee Code:</label>{{form.employee_code}}<br>
     <label>Phone Number:</label>{{form.phone_no}}<br>
     <label>Image:</label>{{form.image}}<br><br>

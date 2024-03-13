@@ -44,16 +44,16 @@ def logout_user(request):
 def register_employee(request):
     form = EmployeeForm()
     company = Company.objects.all()
+    branch = Branch.objects.all()
 
     if request.method == "POST":
         form = EmployeeForm(request.POST)
         if form.is_valid():
-            code = request.POST.get('branch_code')
             Employee.objects.create(
                 user = request.user,
                 company = request.POST.get('company'),
-                branch = Branch.objects.get(branch_code=code),
-                branch_code = code,
+                branch = Branch.objects.get('branch'),
+                branch_code = request.POST.get('branch_code'),
                 employee_code = request.POST.get('employee_code'),
                 phone_no = request.POST.get('phone_no'),
                 image = request.POST.get('image'),
@@ -62,5 +62,5 @@ def register_employee(request):
         else:
             messages.error(request, 'Error')
         
-    context = {'form': form, 'company':company}
+    context = {'form': form, 'company':company, 'branch':branch}
     return render(request, 'main/employee_register.html', context)
