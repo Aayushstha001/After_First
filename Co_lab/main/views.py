@@ -43,24 +43,19 @@ def logout_user(request):
 @login_required(login_url='login')
 def register_employee(request):
     form = EmployeeForm()
-    company = Company.objects.all()
-    branch = Branch.objects.all()
+    companies = Company.objects.all()
+    branches = Branch.objects.all()
 
     if request.method == "POST":
-        form = EmployeeForm(request.POST)
+        form = EmployeeForm(request.POST, request.FILES)
         if form.is_valid():
-            Employee.objects.create(
-                user = request.user,
-                company = request.POST.get('company'),
-                branch = Branch.objects.get('branch'),
-                branch_code = request.POST.get('branch_code'),
-                employee_code = request.POST.get('employee_code'),
-                phone_no = request.POST.get('phone_no'),
-                image = request.POST.get('image'),
-            )
+            employee = form.save(commit=False)
+            employee.branch = form.cleaned_data['branch']  # Get the selected branch from form's cleaned data
+            employee.save()
+            messages.success(request, 'Employee registered successfully.')
             return redirect('home')
         else:
-            messages.error(request, 'Error')
-        
-    context = {'form': form, 'company':company, 'branch':branch}
+            messages.error(request, 'Error occurred during registration.')
+
+    context = {'form': form, 'companies': companies, 'branches': branches}
     return render(request, 'main/employee_register.html', context)

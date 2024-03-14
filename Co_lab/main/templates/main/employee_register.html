@@ -2,24 +2,24 @@
 
 {% block content %}
 <h1>Register Employee</h1>
-<form action="{% url 'register_employee' %}" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <label>Company:</label>
     <select name="company">
-        {% for company in company %}
-        <option value="{{company.company_name}}">{{company}}</option>
+        {% for company in companies %}
+        <option value="{{ company.company_name }}">{{ company.company_name }}</option>
         {% endfor %}
     </select><br>
-    <label>Branch Code:</label>{{form.branch_code}}<br>
+    <label>Branch Code:</label>{{ form.branch_code }}<br>
     <label>Branch:</label>
     <select name="branch">
-        {% for branch in branch %}
-        <option value="{{branch}}">{{branch}}</option>
+        {% for branch in branches %}
+        <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
         {% endfor %}
     </select><br>
-    <label>Employee Code:</label>{{form.employee_code}}<br>
-    <label>Phone Number:</label>{{form.phone_no}}<br>
-    <label>Image:</label>{{form.image}}<br><br>
+    <label>Employee Code:</label>{{ form.employee_code }}<br>
+    <label>Phone Number:</label>{{ form.phone_no }}<br>
+    <label>Image:</label>{{ form.image }}<br><br>
     <a href="{% url 'home' %}">Cancel</a>
     <button type="submit">Register Employee</button>
 </form>
