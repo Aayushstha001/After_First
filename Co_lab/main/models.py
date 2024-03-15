@@ -28,22 +28,13 @@ class Branch(models.Model):
     
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    date_mofified = models.DateTimeField(User, auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    branch_code = models.CharField(max_length=6, unique=True)
     employee_code = models.CharField(max_length=8, unique=True)
     phone_no = models.CharField(max_length=15, unique=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(upload_to='employee', null=True, blank=True)
 
     def __str__(self):
-
         return self.user.username
-    
-def create_employee(sender, instance, created, **kwargs):
-    if created:
-        user_employee = Employee(user=instance)
-        user_employee.save()
-
-post_save.connect(create_employee, sender=User)

@@ -1,41 +1,39 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import *
+from .forms import UserForm, EmployeeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import *
 
 def home(request):
-    context = {}
-    return render(request, 'main/home.html', context)
-    
+    return render(request, 'main/home.html', {})
+
 def register_user(request):
     form = UserForm()
-
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
+            user = form.save()
             login(request, user)
             return redirect('register_employee')
         else:
-            messages.error(request, 'Error occured during registration')
-
+            messages.error(request, 'Error occurred during registration.')
     return render(request, 'main/register.html', {'form': form})
 
 def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST['password']
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            return render(request, 'main/login.html', {'error': 'Invalid login credentials'})
+            messages.error(request, 'Invalid login credentials')
+            return render(request, 'main/login.html')
     else:
         return render(request, 'main/login.html')
-    
+
 def logout_user(request):
     logout(request)
     return redirect('home')
@@ -49,32 +47,18 @@ def register_employee(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST, request.FILES)
         if form.is_valid():
-            employee = form.save(commit=False)
-            employee.user = request.user
-            employee.branch = Branch.objects.get(pk=request.POST['branch'])
-            employee.company = Company.objects.get(pk=request.POST['company'])
-            employee.save()
-            messages.success(request, 'Employee registered successfully.')
-            return redirect('home')
+            try:
+                employee = form.save(commit=False)
+                employee.user = request.user
+                employee.branch = Branch.objects.get(pk=request.POST['branch'])
+                employee.company = Company.objects.get(pk=request.POST['company']) 
+                employee.save()
+                messages.success(request, 'Employee registered successfully.')
+                return redirect('home')
+            except Exception as e:
+                messages.error(request, f'Error occurred during registration: {e}')
         else:
             messages.error(request, 'Error occurred during registration.')
 
     context = {'form': form, 'companies': companies, 'branches': branches}
     return render(request, 'main/employee_register.html', context)
-    # form = EmployeeForm()
-    # companies = Company.objects.all()
-    # branches = Branch.objects.all()
-
-    # if request.method == "POST":
-    #     form = EmployeeForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         employee = form.save(commit=False)
-    #         employee.branch = form.cleaned_data['branch']  # Get the selected branch from form's cleaned data
-    #         employee.save()
-    #         messages.success(request, 'Employee registered successfully.')
-    #         return redirect('home')
-    #     else:
-    #         messages.error(request, 'Error occurred during registration.')
-
-    # context = {'form': form, 'companies': companies, 'branches': branches}
-    # return render(request, 'main/employee_register.html', context)

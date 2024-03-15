@@ -23,7 +23,7 @@
     <a href="{% url 'home' %}">Cancel</a>
     <button type="submit">Register Employee</button>
 </form> -->
-<form method="POST" enctype="multipart/form-data">
+<!-- <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <label for="id_company">Company:</label>
@@ -33,5 +33,11 @@
         {% endfor %}
     </select><br>
     <button type="submit">Register Employee</button>
+</form> -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'home' %}">Cancel</a>
+    <button type="submit"">Register</button>
 </form>
 {% endblock content %}
