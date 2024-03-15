@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Register Employee</h1>
-<form action="" method="POST" enctype="multipart/form-data">
+<!-- <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <label>Company:</label>
     <select name="company">
@@ -21,6 +21,17 @@
     <label>Phone Number:</label>{{ form.phone_no }}<br>
     <label>Image:</label>{{ form.image }}<br><br>
     <a href="{% url 'home' %}">Cancel</a>
+    <button type="submit">Register Employee</button>
+</form> -->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="id_company">Company:</label>
+    <select name="company" id="id_company">
+        {% for company in companies %}
+            <option value="{{ company.pk }}">{{ company.company_name }}</option>
+        {% endfor %}
+    </select><br>
     <button type="submit">Register Employee</button>
 </form>
 {% endblock content %}

@@ -50,7 +50,9 @@ def register_employee(request):
         form = EmployeeForm(request.POST, request.FILES)
         if form.is_valid():
             employee = form.save(commit=False)
-            employee.branch = form.cleaned_data['branch']  # Get the selected branch from form's cleaned data
+            employee.user = request.user
+            employee.branch = Branch.objects.get(pk=request.POST['branch'])
+            employee.company = Company.objects.get(pk=request.POST['company'])
             employee.save()
             messages.success(request, 'Employee registered successfully.')
             return redirect('home')
@@ -59,3 +61,20 @@ def register_employee(request):
 
     context = {'form': form, 'companies': companies, 'branches': branches}
     return render(request, 'main/employee_register.html', context)
+    # form = EmployeeForm()
+    # companies = Company.objects.all()
+    # branches = Branch.objects.all()
+
+    # if request.method == "POST":
+    #     form = EmployeeForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         employee = form.save(commit=False)
+    #         employee.branch = form.cleaned_data['branch']  # Get the selected branch from form's cleaned data
+    #         employee.save()
+    #         messages.success(request, 'Employee registered successfully.')
+    #         return redirect('home')
+    #     else:
+    #         messages.error(request, 'Error occurred during registration.')
+
+    # context = {'form': form, 'companies': companies, 'branches': branches}
+    # return render(request, 'main/employee_register.html', context)
