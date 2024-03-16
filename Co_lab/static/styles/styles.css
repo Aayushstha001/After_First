@@ -28,13 +28,20 @@ body {
     backdrop-filter: blur(10px);
     border-bottom: 2px solid rgba(255, 255, 255, .2);
 }
-.header img{
-    max-height: 60px;
-}
 
 .logo {
     color: #1E90FF;
     font-size: 35px;
+    text-decoration: none;
+    font-weight: 700;
+    font-weight: bold;
+    cursor: default;
+}
+
+.logo p{
+    color: #0368A5;
+    font-family: cursive;
+    font-size: 15px;
     text-decoration: none;
     font-weight: 700;
     font-weight: bold;
