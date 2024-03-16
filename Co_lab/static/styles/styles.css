@@ -43,8 +43,6 @@ body {
     font-family: cursive;
     font-size: 15px;
     text-decoration: none;
-    font-weight: 700;
-    font-weight: bold;
     cursor: default;
 }
 
@@ -58,4 +56,32 @@ body {
 
 .navbar a:hover {
     color: #f00;
+}
+
+.slider {
+    width: 15%;
+    height: 505px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('images/prasanna1.png');
+    background-size: 100% 100%;
+    box-shadow: 1px 2px 10px 5px white;
+    animation: sliders 8s infinite steps(1);
+}
+
+@keyframes sliders{
+    0%{ 
+        background-image: url('images/prasanna1.png'); 
+    }
+    25%{
+        background-image: url('images/prasanna2.png');
+    }
+    50%{
+        background-image: url('images/prasanna3.png');
+    }
+    75%{
+        background-image: url('images/prasanna4.png');
+    }
 }

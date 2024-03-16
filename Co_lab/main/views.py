@@ -8,6 +8,9 @@ from .models import *
 def home(request):
     return render(request, 'main/home.html', {})
 
+def about(request):
+    return render(request, 'main/about_us.html', {})
+
 def register_user(request):
     form = UserForm()
     if request.method == "POST":
