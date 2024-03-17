@@ -1,11 +1,11 @@
 {% load static %}
 
 <header class="header">
-    <a href="{% url 'home' %}" class="logo">Co_lab<p>(Connect, Coordinate, Conquer)</p></a>
+    <a href="{% url 'home' %}" class="logo"><img src="{% static 'styles/images/logo.png' %}" height="55px"></a>
     
     <nav class="navbar">
         <a href="{% url 'home' %}">Home</a>
-        <a href="#">About-Us</a>
+        <a href="{% url 'about' %}">About-Us</a>
         {% if request.user.is_authenticated %}
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
