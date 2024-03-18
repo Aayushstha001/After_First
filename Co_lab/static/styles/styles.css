@@ -98,7 +98,6 @@ body {
     height: calc(100vh - 100px - 40px); 
     text-align: center;
     margin: 20px;
-    color: #fff;
 }
 
 .s-container {
@@ -121,27 +120,5 @@ body {
 
 .s-content {
     max-width: 600px;
-}
-
-.s-content h1 {
-    font-size: 45px;
-    font-weight: 700;
-}
-
-.s-content h2{
-    margin: 10px auto;
-    font-size: 35px;
-    font-weight: 700;
-    color: #052d46;
-}
-
-.s-content h3{
-    margin: 10px auto;
-    font-size: 20px;
-    font-weight: 700;
-    color: #41b3a3;
-}
-
-.s-content p {
-    margin: 10px auto;
+    margin-top: 50px auto;
 }
