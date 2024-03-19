@@ -8,7 +8,7 @@ class Company(models.Model):
     company_telephone1 = models.CharField(max_length=20, unique=True)
     company_telephone2 = models.CharField(max_length=20, unique=True)
     company_registration_no = models.CharField(max_length=7, unique=True)
-    company_address = models.CharField(max_length=255, unique=True)
+    company_address = models.CharField(max_length=255)
     company_logo = models.ImageField(upload_to='company', null=True, blank=True)
     company_description = models.TextField()
     date_established = models.DateField()
