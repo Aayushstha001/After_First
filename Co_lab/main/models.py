@@ -24,7 +24,7 @@ class Branch(models.Model):
     branch_code = models.CharField(max_length=6, unique=True)
 
     def __str__(self):
-        return self.branch_name
+        return self.branch_code
     
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
