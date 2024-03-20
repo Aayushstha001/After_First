@@ -28,13 +28,43 @@ class Branch(models.Model):
     
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
     date_modified = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    employee_code = models.CharField(max_length=8, unique=True)
-    phone_no = models.CharField(max_length=15, unique=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
+    employee_code = models.CharField(max_length=8, unique=True, null=True, blank=True)
+    phone_no = models.CharField(max_length=15, unique=True, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(upload_to='employee', null=True, blank=True)
+    admin = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
+    
+class CompanyPost(models.Model):
+    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='company_post', null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.title
+    
+class EmployeePost(models.Model):
+    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='employee_post', null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.title

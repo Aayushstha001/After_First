@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm, PasswordInput
 from django.contrib.auth.forms import UserCreationForm
-from .models import Employee, Company
+from .models import *
 from django import forms
 
 class UserForm(UserCreationForm):
@@ -16,7 +16,7 @@ class UserForm(UserCreationForm):
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['branch', 'employee_code', 'phone_no', 'address', 'image', 'company']
+        fields = ['user', 'branch', 'employee_code', 'phone_no', 'address', 'image', 'company', 'admin']
         widgets = {
             'phone_no': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
@@ -31,3 +31,15 @@ class CompanyForm(ModelForm):
             'company_name': forms.TextInput(attrs={'class': 'form-control'}),
             'company_email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+class CompanyPostForm(ModelForm):
+    class Meta:
+        model = CompanyForm
+        fields = '__all__'
+        exclude = ['host', 'company']
+
+class EmployeePostForm(ModelForm):
+    class Meta:
+        model = EmployeePost
+        fields = '__all__'
+        exclude = ['host', 'company']

@@ -16,7 +16,7 @@ body {
 }
 
 .header {
-    position: fixed;
+    position: sticky;
     max-height: 80px;
     top: 0;
     left: 0;
@@ -24,7 +24,6 @@ body {
     padding: 20px 100px;
     background: rgba(255, 255, 255, .1);
     display: flex;
-    z-index: 10;
     justify-content: space-between;
     align-items: center;
     backdrop-filter: blur(10px);
@@ -177,4 +176,8 @@ body {
 .s-content .m-btn a:nth-child(2) {
     background: #caf0f8;
     color: #00171f;
+}
+
+.s-container .s-image {
+    margin-top: 50px auto;
 }

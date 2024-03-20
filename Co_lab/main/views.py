@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm, EmployeeForm
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
+from django.http import HttpResponse
 
 def home(request):
     return render(request, 'main/home.html', {})
@@ -18,7 +19,6 @@ def register_user(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('register_employee')
         else:
             messages.error(request, 'Error occurred during registration.')
     return render(request, 'main/register.html', {'form': form})
@@ -52,7 +52,6 @@ def register_employee(request):
         if form.is_valid():
             try:
                 employee = form.save(commit=False)
-                employee.user = request.user
                 employee.branch = Branch.objects.get(pk=request.POST['branch'])
                 employee.company = Company.objects.get(pk=request.POST['company']) 
                 employee.save()
@@ -65,3 +64,65 @@ def register_employee(request):
 
     context = {'form': form, 'companies': companies, 'branches': branches}
     return render(request, 'main/employee_register.html', context)
+
+@login_required(login_url='login')
+def create_company_post(request):
+    form = CompanyPostForm()
+
+    if request.method == 'POST':
+
+        CompanyPost.objects.create(
+            host = request.user,
+            company = request.user.company,
+            title = request.POST.get('title'),
+            description = request.POST.get('description'),
+            image = request.POST.get('image'),
+        )
+        return redirect('home')
+        
+    context = {'form': form}
+    return render(request, 'main/company_post_form.html', context)
+
+@login_required(login_url='login')
+def delete_company_post(request, pk):
+    post = CompanyPost.objects.get(id=pk)
+
+    if request.user != post.host:
+        return HttpResponse('You cannot delete this room!')
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+    
+    return render(request, 'main/delete.html', {'obj':post})
+
+@login_required(login_url='login')
+def create_employee_post(request):
+    form = EmployeePostForm()
+
+    if request.method == 'POST':
+
+        EmployeePost.objects.create(
+            host = request.user,
+            company = request.user.company,
+            title = request.POST.get('title'),
+            description = request.POST.get('description'),
+            image = request.POST.get('image'),
+        )
+        return redirect('home')
+        
+    context = {'form': form}
+    return render(request, 'main/employee_post_form.html', context)
+
+@login_required(login_url='login')
+def delete_employee_post(request, pk):
+    post = EmployeePost.objects.get(id=pk)
+
+    if request.user != post.host:
+        return HttpResponse('You cannot delete this room!')
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+    
+    return render(request, 'main/delete.html', {'obj':post})
