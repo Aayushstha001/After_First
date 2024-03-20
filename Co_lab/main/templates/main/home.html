@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    
+{{employee.admin}}
 {% if employee.admin %}
     <a href="{% url 'create-company-post' %}">Post</a>
 {% else %}

@@ -114,7 +114,7 @@ def create_employee_post(request):
         company = employee.company
         EmployeePost.objects.create(
             host = request.user,
-            company = request.user.company,
+            company = company,
             title = request.POST.get('title'),
             description = request.POST.get('description'),
             image = request.POST.get('image'),
