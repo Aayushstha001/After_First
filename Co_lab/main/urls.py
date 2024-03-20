@@ -12,5 +12,5 @@ urlpatterns = [
     path('register-employee/', views.register_employee, name="register-employee"),
 
     path('create-company-post/', views.create_company_post, name="create-company-post"),
-        path('create-cemployee-post/', views.create_employee_post, name="create-employee-post"),
+    path('create-employee-post/', views.create_employee_post, name="create-employee-post"),
 ]

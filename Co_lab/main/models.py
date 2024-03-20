@@ -31,6 +31,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=255)
     date_modified = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    post = models.CharField(max_length=255, null=True, blank=True)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
     employee_code = models.CharField(max_length=8, unique=True, null=True, blank=True)
     phone_no = models.CharField(max_length=15, unique=True, null=True, blank=True)

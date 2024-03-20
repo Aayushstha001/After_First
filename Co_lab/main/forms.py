@@ -16,7 +16,7 @@ class UserForm(UserCreationForm):
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['user', 'branch', 'employee_code', 'phone_no', 'address', 'image', 'company', 'admin']
+        fields = ['user', 'name', 'branch', 'employee_code', 'phone_no', 'address', 'image', 'company', 'admin', 'post']
         widgets = {
             'phone_no': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
@@ -34,7 +34,7 @@ class CompanyForm(ModelForm):
 
 class CompanyPostForm(ModelForm):
     class Meta:
-        model = CompanyForm
+        model = CompanyPost
         fields = '__all__'
         exclude = ['host', 'company']
 

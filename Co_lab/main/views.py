@@ -7,7 +7,12 @@ from .models import *
 from django.http import HttpResponse
 
 def home(request):
-    return render(request, 'main/home.html', {})
+    try:
+        user = User.objects.get(username=request.user)
+        employee = Employee.objects.get(user=user)
+        return render(request, 'main/home.html', {'employee': employee})
+    except:
+        return render(request, 'main/home.html', {})
 
 def about(request):
     return render(request, 'main/about_us.html', {})
@@ -19,6 +24,7 @@ def register_user(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            return redirect('home')
         else:
             messages.error(request, 'Error occurred during registration.')
     return render(request, 'main/register.html', {'form': form})
@@ -68,12 +74,14 @@ def register_employee(request):
 @login_required(login_url='login')
 def create_company_post(request):
     form = CompanyPostForm()
+    user = User.objects.get(username=request.user)
+    employee = Employee.objects.get(user=user)
 
     if request.method == 'POST':
-
+        company = employee.company
         CompanyPost.objects.create(
             host = request.user,
-            company = request.user.company,
+            company = company,
             title = request.POST.get('title'),
             description = request.POST.get('description'),
             image = request.POST.get('image'),
@@ -99,9 +107,11 @@ def delete_company_post(request, pk):
 @login_required(login_url='login')
 def create_employee_post(request):
     form = EmployeePostForm()
+    user = User.objects.get(username=request.user)
+    employee = Employee.objects.get(user=user)
 
     if request.method == 'POST':
-
+        company = employee.company
         EmployeePost.objects.create(
             host = request.user,
             company = request.user.company,
