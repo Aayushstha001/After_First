@@ -7,12 +7,17 @@ from .models import *
 from django.http import HttpResponse
 
 def home(request):
+    company_post = CompanyPost.objects.all()
+    employee_post = EmployeePost.objects.all()
+
     try:
-        user = User.objects.get(username=request.user)
-        employee = Employee.objects.get(user=user)
-        return render(request, 'main/home.html', {'employee': employee})
-    except:
-        return render(request, 'main/home.html', {})
+        if request.user.is_authenticated:
+            employee = Employee.objects.get(user=request.user)
+            return render(request, 'main/home.html', {'employee': employee, 'company_post': company_post, 'employee_post': employee_post})
+        else:
+            return render(request, 'main/home.html', {'company_post': company_post, 'employee_post': employee_post})
+    except Employee.DoesNotExist:  
+        return render(request, 'main/home.html', {'company_post': company_post, 'employee_post': employee_post})
 
 def about(request):
     return render(request, 'main/about_us.html', {})

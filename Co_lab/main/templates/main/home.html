@@ -1,11 +1,26 @@
 {% extends 'main.html' %}
 
 {% block content %}
-{{employee.admin}}
 {% if employee.admin %}
-    <a href="{% url 'create-company-post' %}">Post</a>
+    <a href="{% url 'create-company-post' %}">Company Post</a>
+    <a href="{% url 'create-employee-post' %}">Post</a>
 {% else %}
     <a href="{% url 'create-employee-post' %}">Post</a>
 {% endif %}
+
+{% for post in company_post %}
+    <h1>By : {{post.host}}</h1>
+    {{post.company}}
+    {{post.title}}
+    {% if post.description %}
+        {{post.description}}
+    {% endif %}
+    {% if post.image %}
+        <img src="{{post.image.url}}">
+    {% endif %}
+    {{post.created|timesince}}
+{% endfor %}
+
+
 
 {% endblock content %}
