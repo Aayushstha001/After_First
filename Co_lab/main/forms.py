@@ -35,8 +35,7 @@ class CompanyForm(ModelForm):
 class CompanyPostForm(ModelForm):
     class Meta:
         model = CompanyPost
-        fields = '__all__'
-        exclude = ['host', 'company']
+        fields = ['title', 'description']
 
 class EmployeePostForm(ModelForm):
     class Meta:

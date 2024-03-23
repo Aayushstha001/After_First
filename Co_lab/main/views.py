@@ -5,15 +5,19 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.http import HttpResponse
+import os
+from django.conf import settings
 
 def home(request):
     company_post = CompanyPost.objects.all()
     employee_post = EmployeePost.objects.all()
-
-    if request.user.is_authenticated:
-        employee = Employee.objects.get(user=request.user)
-    else:
-         employee = {} 
+    try:
+        if request.user.is_authenticated:
+            employee = Employee.objects.get(user=request.user)
+        else:
+            employee = {}
+    except:
+        employee ={} 
 
     context = {'employee': employee, 'company_post': company_post, 'employee_post': employee_post}
     return render(request, 'main/home.html', context)
@@ -90,10 +94,34 @@ def create_company_post(request):
             company = company,
             title = request.POST.get('title'),
             description = request.POST.get('description'),
-            image = request.POST.get('image'),
         )
         return redirect('home')
         
+    context = {'form': form}
+    return render(request, 'main/company_post_form.html', context)
+
+@login_required(login_url='login')
+def create_company_post(request):
+    form = CompanyPostForm()
+    user = User.objects.get(username=request.user)
+    employee = Employee.objects.get(user=user)
+    company = employee.company
+
+    if request.method == "POST":
+        form = CompanyPostForm(request.POST, request.FILES)  # Include request.FILES
+        if form.is_valid():
+            try:
+                companypost = form.save(commit=False)
+                companypost.host = request.user
+                companypost.company = company
+                companypost.save()
+                messages.success(request, 'Successfully posted the post.')
+                return redirect('home')
+            except Exception as e:
+                messages.error(request, f'Error occurred during post: {e}')
+        else:
+            messages.error(request, 'Error occurred during post.')
+
     context = {'form': form}
     return render(request, 'main/company_post_form.html', context)
 
