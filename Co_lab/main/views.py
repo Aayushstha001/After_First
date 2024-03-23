@@ -10,20 +10,20 @@ def home(request):
     company_post = CompanyPost.objects.all()
     employee_post = EmployeePost.objects.all()
 
-    try:
-        if request.user.is_authenticated:
-            employee = Employee.objects.get(user=request.user)
-            return render(request, 'main/home.html', {'employee': employee, 'company_post': company_post, 'employee_post': employee_post})
-        else:
-            return render(request, 'main/home.html', {'company_post': company_post, 'employee_post': employee_post})
-    except Employee.DoesNotExist:  
-        return render(request, 'main/home.html', {'company_post': company_post, 'employee_post': employee_post})
+    if request.user.is_authenticated:
+        employee = Employee.objects.get(user=request.user)
+    else:
+         employee = {} 
+
+    context = {'employee': employee, 'company_post': company_post, 'employee_post': employee_post}
+    return render(request, 'main/home.html', context)
 
 def about(request):
     return render(request, 'main/about_us.html', {})
 
 def register_user(request):
     form = UserForm()
+
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -32,6 +32,7 @@ def register_user(request):
             return redirect('home')
         else:
             messages.error(request, 'Error occurred during registration.')
+
     return render(request, 'main/register.html', {'form': form})
 
 def login_user(request):
@@ -102,7 +103,7 @@ def delete_company_post(request, pk):
 
     if request.user != post.host:
         return HttpResponse('You cannot delete this room!')
-
+    
     if request.method == 'POST':
         post.delete()
         return redirect('home')
@@ -113,13 +114,10 @@ def delete_company_post(request, pk):
 def create_employee_post(request):
     form = EmployeePostForm()
     user = User.objects.get(username=request.user)
-    employee = Employee.objects.get(user=user)
 
     if request.method == 'POST':
-        company = employee.company
         EmployeePost.objects.create(
             host = request.user,
-            company = company,
             title = request.POST.get('title'),
             description = request.POST.get('description'),
             image = request.POST.get('image'),

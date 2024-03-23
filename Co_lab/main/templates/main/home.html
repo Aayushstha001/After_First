@@ -7,20 +7,39 @@
 {% else %}
     <a href="{% url 'create-employee-post' %}">Post</a>
 {% endif %}
+<div class="main-container">
+    <div class="s-main-container1">
+    </div>
 
-{% for post in company_post %}
-    <h1>By : {{post.host}}</h1>
-    {{post.company}}
-    {{post.title}}
-    {% if post.description %}
-        {{post.description}}
-    {% endif %}
-    {% if post.image %}
-        <img src="{{post.image.url}}">
-    {% endif %}
-    {{post.created|timesince}}
-{% endfor %}
+    <div class="s-main-container2">
+    {% for post in company_post %}
+        <h1>By : {{post.host}}</h1>
+        {{post.company}}
+        {{post.title}}
+        {% if post.description %}
+            {{post.description}}
+        {% endif %}
+        {% if post.image %}
+            <img src="{{post.image.url}}" width="80px">
+        {% endif %}
+        {{post.created|timesince}}
+    {% endfor %}
+    </div>
 
+    <div class="s-main-container3">
+    {% for post in employee_post %}
+        <h1>By : {{post.host}}</h1>
+        {{post.title}}
+        {% if post.description %}
+            {{post.description}}
+        {% endif %}
+        {% if post.image %}
+            <img src="{{post.image.url}}" width="50px">
+        {% endif %}
+        {{post.created|timesince}}
+    {% endfor %}
+    </div>
 
+</div>
 
 {% endblock content %}

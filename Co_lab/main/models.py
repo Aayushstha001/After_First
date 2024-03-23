@@ -27,7 +27,7 @@ class Branch(models.Model):
         return self.branch_code
     
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     post = models.CharField(max_length=255, null=True, blank=True)
@@ -57,7 +57,6 @@ class CompanyPost(models.Model):
     
 class EmployeePost(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

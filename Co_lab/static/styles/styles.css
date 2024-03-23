@@ -178,3 +178,21 @@ body {
 .s-container .s-image {
     margin-top: 50px auto;
 }
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.s-main-container1 {
+    flex: 1;
+}
+  
+.s-main-container2 {
+    flex: 3;
+}
+  
+.s-main-container3 {
+    flex: 2;
+}
