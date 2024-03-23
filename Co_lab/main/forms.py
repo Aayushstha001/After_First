@@ -7,7 +7,7 @@ from django import forms
 class UserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
         widgets = {
             'password1': PasswordInput(attrs={'class': 'form-control'}),
             'password2': PasswordInput(attrs={'class': 'form-control'}),
@@ -16,7 +16,7 @@ class UserForm(UserCreationForm):
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['user', 'name', 'branch', 'employee_code', 'phone_no', 'address', 'image', 'company', 'admin', 'post']
+        fields = ['user', 'branch', 'employee_code', 'phone_no', 'address', 'image', 'company', 'admin', 'post']
         widgets = {
             'phone_no': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),

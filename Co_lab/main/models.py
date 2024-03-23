@@ -28,7 +28,6 @@ class Branch(models.Model):
     
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
     date_modified = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     post = models.CharField(max_length=255, null=True, blank=True)
