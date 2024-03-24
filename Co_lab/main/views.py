@@ -83,48 +83,27 @@ def register_employee(request):
 
 @login_required(login_url='login')
 def create_company_post(request):
-    form = CompanyPostForm()
+    form = CompanyPostForm(request.POST, request.FILES)
     user = User.objects.get(username=request.user)
     employee = Employee.objects.get(user=user)
+    company = employee.company
 
-    if request.method == 'POST':
-        company = employee.company
-        CompanyPost.objects.create(
-            host = request.user,
-            company = company,
-            title = request.POST.get('title'),
-            description = request.POST.get('description'),
-            image = request.POST.get('image')
-        )
-        return redirect('home')
-        
-    context = {'form': form}
-    return render(request, 'main/company_post_form.html', context)
+    if request.method == "POST":
+        form = CompanyPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                companypost = form.save(commit=False)
+                companypost.host = request.user
+                companypost.company = company
+                companypost.save()
+                return redirect('home')
+            except Exception as e:
+                messages.error(request, f'Error occurred during post: {e}')
+        else:
+            messages.error(request, 'Error occurred during post.')
 
-# @login_required(login_url='login')
-# def create_company_post(request):
-#     form = CompanyPostForm()
-#     user = User.objects.get(username=request.user)
-#     employee = Employee.objects.get(user=user)
-#     company = employee.company
-
-#     if request.method == "POST":
-#         form = CompanyPostForm(request.POST, request.FILES) 
-#         if form.is_valid():
-#             try:
-#                 companypost = form.save(commit=False)
-#                 companypost.host = request.user
-#                 companypost.company = company
-#                 companypost.save()
-#                 messages.success(request, 'Successfully posted the post.')
-#                 return redirect('home')
-#             except Exception as e:
-#                 messages.error(request, f'Error occurred during post: {e}')
-#         else:
-#             messages.error(request, 'Error occurred during post.')
-
-#     context = {'form': form}
-#     return render(request, 'main/company_post_form.html', context)
+    context = {'form': form} 
+    return render(request, 'main/company_post_form.html', context)   
 
 @login_required(login_url='login')
 def delete_company_post(request, pk):
@@ -141,20 +120,23 @@ def delete_company_post(request, pk):
 
 @login_required(login_url='login')
 def create_employee_post(request):
-    form = EmployeePostForm()
-    user = User.objects.get(username=request.user)
+    form = EmployeePostForm(request.POST, request.FILES)
 
-    if request.method == 'POST':
-        EmployeePost.objects.create(
-            host = request.user,
-            title = request.POST.get('title'),
-            description = request.POST.get('description'),
-            image = request.POST.get('image'),
-        )
-        return redirect('home')
-        
-    context = {'form': form}
-    return render(request, 'main/employee_post_form.html', context)
+    if request.method == "POST":
+        form = EmployeePostForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                employeepost = form.save(commit=False)
+                employeepost.host = request.user
+                employeepost.save()
+                return redirect('home')
+            except Exception as e:
+                messages.error(request, f'Error occurred during post: {e}')
+        else:
+            messages.error(request, 'Error occurred during post.')
+
+    context = {'form': form} 
+    return render(request, 'main/employee_post_form.html', context) 
 
 @login_required(login_url='login')
 def delete_employee_post(request, pk):

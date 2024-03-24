@@ -46,8 +46,8 @@ class CompanyPost(models.Model):
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to='company', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='company_post', null=True, blank=True)
 
     class Meta:
         ordering = ['-created']

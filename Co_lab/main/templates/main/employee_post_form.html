@@ -3,17 +3,9 @@
 {% block content %}
     
 <h1>Employee Post</h1>
-<form class="form" action="" method="post">
+<form method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
-
-        <label>Post Title</label>
-        {{form.title}}
-        <br>
-        <label>Post Description</label>
-        {{form.description}}
-        <br>
-        <label>Post Image</label>
-        {{form.image}}
-        <button type="submit"">Post</button>
+    {{ form.as_p }}
+    <button type="submit">Post</button>
 </form>
 {% endblock content %}
