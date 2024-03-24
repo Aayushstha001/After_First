@@ -5,10 +5,26 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.http import HttpResponse
+from django.db.models import Q
 
 def home(request):
     company_post = CompanyPost.objects.all()
     employee_post = EmployeePost.objects.all()
+
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    companies = Company.objects.filter(
+        Q(company_name__icontains=q)
+    )
+
+    r = request.GET.get('r') if request.GET.get('r') != None else ''
+    users = User.objects.filter(
+        Q(username__icontains=r) |
+        Q(email__icontains=r) |
+        Q(first_name__icontains=r) |
+        Q(last_name__icontains=r) 
+    )
+
+    employees = Employee.objects.all()
 
     try:
         if request.user.is_authenticated:
@@ -18,7 +34,7 @@ def home(request):
     except:
         employee ={} 
 
-    context = {'employee': employee, 'company_post': company_post, 'employee_post': employee_post}
+    context = {'employee': employee, 'company_post': company_post, 'employee_post': employee_post, 'companies': companies, 'users': users, 'employees': employees}
     return render(request, 'main/home.html', context)
 
 def about(request):
