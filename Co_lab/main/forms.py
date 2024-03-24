@@ -35,7 +35,7 @@ class CompanyForm(ModelForm):
 class CompanyPostForm(ModelForm):
     class Meta:
         model = CompanyPost
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'image']
 
 class EmployeePostForm(ModelForm):
     class Meta:
