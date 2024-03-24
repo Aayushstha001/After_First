@@ -5,12 +5,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.http import HttpResponse
-import os
-from django.conf import settings
 
 def home(request):
     company_post = CompanyPost.objects.all()
     employee_post = EmployeePost.objects.all()
+
     try:
         if request.user.is_authenticated:
             employee = Employee.objects.get(user=request.user)

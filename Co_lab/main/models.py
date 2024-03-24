@@ -44,8 +44,7 @@ class Employee(models.Model):
 class CompanyPost(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='company_post', null=True, blank=True)
 
@@ -57,8 +56,7 @@ class CompanyPost(models.Model):
     
 class EmployeePost(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='employee_post', null=True, blank=True)
 

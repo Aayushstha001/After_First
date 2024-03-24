@@ -1,45 +1,49 @@
 {% extends 'main.html' %}
 
+{% load static %}
+
 {% block content %}
-{% if employee.admin %}
-    <a href="{% url 'create-company-post' %}">Company Post</a>
-    <a href="{% url 'create-employee-post' %}">Post</a>
-{% else %}
-    <a href="{% url 'create-employee-post' %}">Post</a>
-{% endif %}
+
+<div class="post">
+    <div class="post-left">
+        {% if request.user.is_authenticated %}
+            {% if employee.image %}
+                <img src="{{employee.image.url}}" height="30px">
+            {% else %}
+                <img src="{% static 'styles/images/avatar.png' %}" height="30px">
+            {% endif %}
+            <a href="#"><h1>{{request.user}}</h1></a>
+        {% else %}
+            <a href="#"><h1>Login to access more of our services</h1></a>
+        {% endif %}
+    </div>
+
+    <div class="post-btn">
+        {% if request.user.is_authenticated %}
+            {% if employee.admin %}
+                <a href="{% url 'create-company-post' %}"><span><i class='bx bx-plus' ></i>Company Post</span></a>
+                <a href="{% url 'create-employee-post' %}"><span><i class='bx bx-plus' ></i>Post</span></a>
+            {% else %}
+                <a href="{% url 'create-employee-post' %}"><span><i class='bx bx-plus' ></i>Post</span></a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}"><span><i class='bx bx-user-check'></i>Login</span></a> 
+        {% endif %}
+    </div>
+</div>
+
 <div class="main-container">
     <div class="s-main-container1">
+        
     </div>
 
     <div class="s-main-container2">
-    {% for post in company_post %}
-        <h1>By : {{post.host}}</h1>
-        {{post.company}}
-        {{post.title}}
-        {% if post.description %}
-            {{post.description}}
-        {% endif %}
-        {% if post.image %}
-            <img src="{{post.image.url}}" width="80px">
-        {% endif %}
-        {{post.created|timesince}}
-    {% endfor %}
+        {% include 'main/company_post.html' %}
     </div>
 
     <div class="s-main-container3">
-    {% for post in employee_post %}
-        <h1>By : {{post.host}}</h1>
-        {{post.title}}
-        {% if post.description %}
-            {{post.description}}
-        {% endif %}
-        {% if post.image %}
-            <img src="{{post.image.url}}" width="50px">
-        {% endif %}
-        {{post.created|timesince}}
-    {% endfor %}
+        {% include 'main/employee_post.html' %}
     </div>
-
 </div>
 
 {% endblock content %}

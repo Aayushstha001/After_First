@@ -1,0 +1,23 @@
+{% load static %}
+
+{% for post in company_post %}
+    <div class="post-container">
+        <div class="user-profile">
+            {% if post.company.company_logo %}
+                <img class="company-logo" src="{{ post.company.company_logo.url }}" width="45px">
+            {% else %}
+                <img class="company-logo" src="{% static 'styles/images/company_avatar.png' %}" width="45px">
+            {% endif %}
+            <div>
+                <p>{{ post.company }}</p>
+                <span>{{ post.created }}</span><br>
+                <span>{{ post.created|timesince }} ago</span>
+            </div>
+        </div>
+        <p class="post-host">Post : {{post.host}}</p>
+        <p class="post-text">{{ post.title }}</p>
+        {% if post.image %}
+            <img class="post-image" src="{{ post.image.url }}" class="post-img" width="100%">
+        {% endif %}
+    </div>
+{% endfor %}
