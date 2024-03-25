@@ -167,19 +167,19 @@ def delete_employee_post(request, pk):
     return render(request, 'main/delete.html', {'obj':post})
 
 def userProfile(request, pk):
-    user = User.objects.get(id=pk)
     user = User.objects.get(id=pk) 
     employee = user.employee  
     if employee:
-        posts = user.employeepost_set.all()  
+        employee_post = user.employeepost_set.all()  
     else:
-        posts = None
-    context = {'user': user, 'posts': posts, 'employee': employee}  
+        employee = None
+        employee_post = None
+    context = {'user': user, 'employee_post': employee_post, 'employee': employee}  
     return render(request, 'main/user_profile.html', context)
 
 def companyProfile(request, pk):
     company = Company.objects.get(id=pk)
-    post = company.companypost_set.all()
+    company_post = company.companypost_set.all()
     branch = company.branch_set.all()
-    context={'company': company, 'post': post, 'branch': branch}
+    context={'company': company, 'company_post': company_post, 'branch': branch}
     return render(request, 'main/company_profile.html', context)

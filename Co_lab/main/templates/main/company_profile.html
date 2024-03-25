@@ -3,4 +3,52 @@
 
 {% block content %}
 
+<div class="profile-container">
+    <div class="profile-scontainer">
+        <div class="profile-head">
+            <div class="img-container">
+                {% if company.company_logo %}
+                    <img src="{{company.company_logo.url}}" height="65px">
+                {% else %}
+                    <img src="{% static 'styles/images/company_avatar.png' %}" height="65px">
+                {% endif %}
+            </div>
+            <div class="info">
+                <h2>{{company.company_name}}</h2>
+                <p>{{company.company_email}}</p>
+            </div>
+        </div>
+        <div class="col-container">
+            <div class="left-col">
+                <div class="content">
+                    <p>{{company.company_description}}</p>
+                    <p><u>Telephone : </u></p>
+                    <p>{{company.company_telephone1}} | {{company.company_telephone2}}</p>
+                    <p><u>Address : </u></p>
+                    <p>{{company.company_address}}</p>
+                    <P><u>Social Site :</u></P>
+                    <a href="{{company.company_social_website}}">{{company.company_name}}</a>
+                </div>
+            </div>
+            <div class="right-col">
+                {% for post in company_post %}
+                    <div class="post-container">
+                        <div class="user-profile">
+                            <div>
+                                <a href="{% url 'user-profile' post.host.id %}" style="text-decoration: none;"><p class="post-host">Post : {{post.host}}</p></a>
+                                <span>{{ post.created }}</span><br>
+                                <span>{{ post.created|timesince }} ago</span>
+                            </div>
+                        </div>
+                        <p class="post-text">{{ post.title }}</p>
+                        {% if post.image %}
+                            <img class="post-image" src="{{ post.image.url }}" class="post-img" width="100%">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
