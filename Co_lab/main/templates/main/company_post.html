@@ -3,18 +3,19 @@
 {% for post in company_post %}
     <div class="post-container">
         <div class="user-profile">
+            <a href="{% url 'company-profile' post.company.id %}" style="text-decoration: none;">
             {% if post.company.company_logo %}
                 <img class="company-logo" src="{{ post.company.company_logo.url }}" width="45px">
             {% else %}
                 <img class="company-logo" src="{% static 'styles/images/company_avatar.png' %}" width="45px">
             {% endif %}
             <div>
-                <p>{{ post.company }}</p>
+                <p>{{ post.company }}</p></a>
                 <span>{{ post.created }}</span><br>
                 <span>{{ post.created|timesince }} ago</span>
             </div>
         </div>
-        <p class="post-host">Post : {{post.host}}</p>
+        <a href="{% url 'user-profile' post.host.id %}" style="text-decoration: none;"><p class="post-host">Post : {{post.host}}</p></a>
         <p class="post-text">{{ post.title }}</p>
         {% if post.image %}
             <img class="post-image" src="{{ post.image.url }}" class="post-img" width="100%">

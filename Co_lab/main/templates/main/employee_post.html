@@ -3,13 +3,14 @@
 {% for post in employee_post %}
     <div class="post-container">
         <div class="user-profile">
+            <a href="{% url 'user-profile' post.host.id %}" style="text-decoration: none;">
             {% if post.host.employee.image %}
                 <img class="company-logo" src="{{ post.host.employee.image.url }}" width="45px">
             {% else %}
                 <img class="company-logo" src="{% static 'styles/images/avatar.png' %}" width="45px">
             {% endif %}
             <div>
-                <p>{{post.host}}</p>
+                <p>{{post.host}}</p></a>
                 <span>{{ post.created }}</span><br>
                 <span>{{ post.created|timesince }} ago</span>
             </div>

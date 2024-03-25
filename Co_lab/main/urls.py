@@ -13,4 +13,7 @@ urlpatterns = [
 
     path('create-company-post/', views.create_company_post, name="create-company-post"),
     path('create-employee-post/', views.create_employee_post, name="create-employee-post"),
+
+    path('profile/<str:pk>/', views.userProfile, name="user-profile"),
+    path('company_profile/<str:pk>/', views.companyProfile, name="company-profile"),
 ]

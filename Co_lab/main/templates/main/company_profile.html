@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="header__wrapper">
+    <header></header>
+    <div class="cols__container">
+        <div class="left__col">
+            <div class="img__container">
+                <img src="{% static 'styles/images/avatar.png' %}">
+            </div>
+            <h2>Aayush Shrestha</h2>
+            <p>UI/UX Designer</p>
+            <p>maharjananjali625@gmail.com</p>
+
+            <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ea suscipit alias deserunt laudantium cupiditate enim sed. Libero laboriosam repudiandae natus non ex autem odio vero quidem, sint odit! Sequi!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="right__col">
+        <nav>
+            <h3>Posts by Aayush:</h3>       
+        </nav>
+        <div class="profile-post">
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

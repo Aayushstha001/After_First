@@ -7,7 +7,7 @@
     </form>
     <div class="search-result">
         {% for companies in companies %}
-            <a href="#">
+            <a href="{% url 'company-profile' companies.id %}">
             {% if companies.company_logo %}
                 <img src="{{companies.company_logo.url}}">
             {% else %}
@@ -24,7 +24,7 @@
     </form>
     <div class="search-result">
         {% for users in users %}
-            <a href="#">
+            <a href="{% url 'user-profile' users.id %}">
             {% for employees in employees %}
                 {% if employees.user == users %}
                     {% if employees.image %}
