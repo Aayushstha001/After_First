@@ -15,9 +15,6 @@
                 <a href="{% url 'register' %}">Register</a>
                 <a href="{% url 'login' %}">Login</a>
             {% endif %}
-                <!-- {% if employee.image %}
-                    <a href="#"><img src="{{employee.image.url}}" height="50px"></a>
-                {% endif %} -->
             {% if request.user.is_staff %}
                 <a href="http://127.0.0.1:8000/admin/">Admin</a>
             {% endif %}

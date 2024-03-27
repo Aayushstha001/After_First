@@ -479,45 +479,46 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
   
-  .delete-message {
-    background-color: #ffffff;
+.delete-message {
+    background-color: rgba(255, 255, 255, .1);
+    backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
+}
   
-  .delete-message h1 {
+.delete-message h1 {
     font-size: 24px;
     margin-bottom: 10px;
-  }
+}
   
-  .delete-message p {
+.delete-message p {
     font-size: 18px;
     margin-bottom: 20px;
-  }
+}
   
-  .buttons {
+.buttons {
     display: flex;
     justify-content: center;
-  }
+}
   
-  .delete-btn, .cancel-btn {
+.delete-btn, .cancel-btn {
     padding: 10px 20px;
     margin: 0 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  .delete-btn {
+.delete-btn {
     background-color: #ff3333;
     color: white;
-  }
+}
   
-  .cancel-btn {
+.cancel-btn {
     background-color: #4CAF50;
     color: white;
-  }
+}

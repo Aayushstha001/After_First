@@ -10,10 +10,16 @@
         <form class="form" action="" method="POST">
             {% csrf_token %}
         <button class="delete-btn" type="submit">Delete</button>
-        <button class="cancel-btn">Cancel</button>
         </form>
+        <button class="cancel-btn" onclick="goBack()">Cancel</button>
       </div>
     </div>
 </div>
+
+<script>
+  function goBack() {
+      window.history.back();
+  }
+</script>
 
 {% endblock content %}
